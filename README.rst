@@ -8,6 +8,15 @@ You can read configuration from environ or local file with it.
 
 
 ***************
+Install
+***************
+
+.. code:: bash
+
+    $: pip install p_config
+
+
+***************
 Usuage
 ***************
 
