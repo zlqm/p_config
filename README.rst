@@ -75,3 +75,8 @@ You can read configuration via this way
     In [9]: config['SERVER.PORT']
     Out[9]: '8080'
 
+    In [10]: config.get('SERVER.PORT')
+    Out[10]: '8080'
+
+    In [11]: config.get('NONE_EXIST')
+    Out[11]: None

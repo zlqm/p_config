@@ -59,3 +59,9 @@ class Config:
         if cast_func:
             config = cast_func(config)
         return config
+
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except KeyError:
+            return default

@@ -25,6 +25,11 @@ def test_default():
     except KeyError:
         pass
 
+    assert config.get('Dbs.Mysql.Options.Charset') == 'utf8mb4'
+    assert config.get('Dbs.Mysql.Options.None') is None
+    assert config.get('Dbs.Mysql.Options.None', 'default') == 'default'
+    assert config.get('None', 'default') == 'default'
+
 
 def test_override_yaml():
     config = Config(os.path.join(base_dir, 'default.yml'))
