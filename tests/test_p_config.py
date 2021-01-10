@@ -6,7 +6,9 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 def test_default():
-    config = Config(os.path.join(base_dir, 'default.yml'))
+    config_file = os.path.join(base_dir, 'default.yml')
+    config = Config(config_file, none_exist_key='value', hostnames=None)
+    assert config['none_exist_key'] == 'value'
     assert config['server.port'] == 80
     assert config['server.hostname'] == 'localhost'
     assert config['dbs.mysql.hostname'] == 'localhost'

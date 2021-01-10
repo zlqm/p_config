@@ -6,7 +6,7 @@ with open('README.rst') as f:
 
 setuptools.setup(
     name='p_config',
-    version='1.1',
+    version='1.2.0',
     author='Abraham',
     author_email='abraham.liu@hotmail.com',
     description='small tool for project config management',

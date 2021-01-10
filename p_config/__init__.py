@@ -9,9 +9,10 @@ except ImportError:
 
 
 class Config:
-    def __init__(self, file_obj=None):
+    def __init__(self, file_obj=None, **defaults):
         self._cached_config = {}
         self._cast_func_mapping = {}
+        self.merge_config(defaults)
         if file_obj:
             self.load(file_obj)
 
