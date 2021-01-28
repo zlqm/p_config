@@ -1,6 +1,6 @@
 import os
 
-from p_config import Config
+from p_config import Config, Converter
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -48,6 +48,9 @@ def test_override_yaml():
     assert config['nodes.node1'] == '127.0.0.1'
     assert config['nodes'] == {'NODE1': '127.0.0.1'}
 
+    assert config.NODES.NODE1 == '127.0.0.1'
+    assert config.NODES == {'NODE1': '127.0.0.1'}
+
 
 def test_environ():
     config = Config()
@@ -63,3 +66,37 @@ def test_environ():
     os.environ['SERVER.PORT'] = '33'
     config.load_env()
     assert config['server.port'] == 33
+
+
+def test_attribute():
+    config_file = os.path.join(base_dir, 'default.yml')
+    config = Config(config_file, none_exist_key='value', hostnames=None)
+
+    assert config.NONE_EXIST_KEY == 'value'
+    assert config.SERVER.PORT == 80
+    assert config.SERVER.HOSTNAME == 'localhost'
+
+    try:
+        config.SERVER.UNKNOWN
+        raise Exception('expect KeyError')
+    except KeyError:
+        pass
+
+
+def test_convterter():
+    class Csv(Converter):
+        def __call__(self, value):
+            return value.split(',')
+
+    class MyConfig(Config):
+        port = int
+        hosts = Csv()
+
+    config = MyConfig(
+        port='22',
+        another_port='22',
+        hosts='a.com,b.com,c.com',
+    )
+    assert config.PORT == 22
+    assert config.ANOTHER_PORT == '22'
+    assert config.HOSTS == ['a.com', 'b.com', 'c.com']

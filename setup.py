@@ -3,10 +3,9 @@ import setuptools
 with open('README.rst') as f:
     long_description = f.read()
 
-
 setuptools.setup(
     name='p_config',
-    version='1.2.0',
+    version='1.3.0',
     author='Abraham',
     author_email='abraham.liu@hotmail.com',
     description='small tool for project config management',
