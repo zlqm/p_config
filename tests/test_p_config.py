@@ -1,4 +1,5 @@
 import os
+import pytest
 
 from p_config import Config, Converter
 
@@ -21,11 +22,8 @@ def test_default():
     # test title case
     assert config['Dbs.Mysql.Options.Charset'] == 'utf8mb4'
 
-    try:
+    with pytest.raises(KeyError):
         config['server.unknow']
-        raise Exception('expect KeyError')
-    except KeyError:
-        pass
 
     assert config.get('Dbs.Mysql.Options.Charset') == 'utf8mb4'
     assert config.get('Dbs.Mysql.Options.None') is None
@@ -50,6 +48,11 @@ def test_override_yaml():
 
     assert config.NODES.NODE1 == '127.0.0.1'
     assert config.NODES == {'NODE1': '127.0.0.1'}
+
+    config['server.port'] = 9090
+    assert config['server.port'] == 9090
+    assert config['SERVER.PORT'] == 9090
+    assert config.SERVER.PORT == 9090
 
 
 def test_environ():
@@ -76,11 +79,8 @@ def test_attribute():
     assert config.SERVER.PORT == 80
     assert config.SERVER.HOSTNAME == 'localhost'
 
-    try:
+    with pytest.raises(KeyError):
         config.SERVER.UNKNOWN
-        raise Exception('expect KeyError')
-    except KeyError:
-        pass
 
 
 def test_convterter():

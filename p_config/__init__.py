@@ -1,4 +1,4 @@
-__version__ = '1.3.0'
+__version__ = '1.3.1'
 
 from copy import deepcopy
 from functools import partial
@@ -106,6 +106,9 @@ class Config(metaclass=ConfigMeta):
         if converter:
             value = converter(value)
         return value
+
+    def __setitem__(self, key, value):
+        return self.__set_config(key, value)
 
     def get(self, key, default=None):
         try:
