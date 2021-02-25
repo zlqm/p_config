@@ -57,7 +57,8 @@ def test_override_yaml():
 
 def test_environ():
     config = Config()
-    config.set_cast_func('server.port', int)
+    with pytest.warns(UserWarning):
+        config.set_cast_func('server.port', int)
 
     os.environ['server.port'] = '22'
     os.environ['SERVER.hostname'] = 'demo.com'
