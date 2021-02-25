@@ -2,7 +2,7 @@
 
 __author__ = """p_config"""
 __email__ = 'abraham.liu@hotmail.com'
-__version__ = '1.3.2'
+__version__ = '1.4.0'
 
 from .core import Converter, Config
 
